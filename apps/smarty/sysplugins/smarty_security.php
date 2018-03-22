@@ -322,7 +322,7 @@ class Smarty_Security
             // fall back
             return $this->isTrustedStaticClass($class_name, $compiler);
         }
-        if ($params[ 2 ] == 'method') {
+        if ($params[ 2 ] === 'method') {
             $allowed = $this->trusted_static_methods;
             $name = substr($params[ 0 ], 0, strpos($params[ 0 ], '('));
         } else {
@@ -472,7 +472,7 @@ class Smarty_Security
             return true;
         }
         if (!empty($this->trusted_constants)) {
-            if (!in_array($const, $this->trusted_constants)) {
+            if (!in_array(strtolower($const), $this->trusted_constants)) {
                 $compiler->trigger_template_error("Security: access to constant '{$const}' not permitted");
                 return false;
             }
@@ -562,7 +562,7 @@ class Smarty_Security
                 unset($this->_resource_dir[ $directory ]);
             }
             foreach ((array) $this->secure_dir as $directory) {
-                $directory = $this->smarty->_realpath($directory . DS, true);
+                $directory = $this->smarty->_realpath($directory . DIRECTORY_SEPARATOR, true);
                 $this->_resource_dir[ $directory ] = true;
             }
             $this->_secure_dir = (array) $this->secure_dir;
@@ -618,7 +618,7 @@ class Smarty_Security
 
             $this->_trusted_dir = $this->trusted_dir;
             foreach ((array) $this->trusted_dir as $directory) {
-                $directory = $this->smarty->_realpath($directory . DS, true);
+                $directory = $this->smarty->_realpath($directory . DIRECTORY_SEPARATOR, true);
                 $this->_php_resource_dir[ $directory ] = true;
             }
         }
@@ -627,7 +627,7 @@ class Smarty_Security
             $this->_checkDir($this->smarty->_realpath($filepath, true), $this->_php_resource_dir);
         return true;
     }
-    
+
     /**
      * Check if file is inside a valid directory
      *
@@ -639,7 +639,7 @@ class Smarty_Security
      */
     private function _checkDir($filepath, $dirs)
     {
-        $directory = dirname($filepath) . DS;
+        $directory = dirname($filepath) . DIRECTORY_SEPARATOR;
         $_directory = array();
         while (true) {
             // remember the directory to add it to _resource_dir in case we're successful
@@ -656,7 +656,7 @@ class Smarty_Security
                 break;
             }
             // bubble up one level
-            $directory = preg_replace('#[\\\/][^\\\/]+[\\\/]$#', DS, $directory);
+            $directory = preg_replace('#[\\\/][^\\\/]+[\\\/]$#', DIRECTORY_SEPARATOR, $directory);
         }
 
         // give up
@@ -676,11 +676,11 @@ class Smarty_Security
     {
         if ($security_class instanceof Smarty_Security) {
             $smarty->security_policy = $security_class;
-            return;
+            return $smarty;
         } elseif (is_object($security_class)) {
             throw new SmartyException("Class '" . get_class($security_class) . "' must extend Smarty_Security.");
         }
-        if ($security_class == null) {
+        if ($security_class === null) {
             $security_class = $smarty->security_class;
         }
         if (!class_exists($security_class)) {
@@ -690,7 +690,7 @@ class Smarty_Security
         } else {
             $smarty->security_policy = new $security_class($smarty);
         }
-        return;
+        return $smarty;
     }
     /**
      * Start template processing

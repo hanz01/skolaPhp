@@ -2,31 +2,30 @@
 error_reporting(E_ERROR);
 require "inc/config.inc.php";
 require "inc/class.db.php";
+require("templates/templateConfig.php");
 
 $db=new Db($cfg['DBServer'],$cfg['DBUSer'],$cfg['DBPasswd'],$cfg['DBName']);
 
-$_POST['jmeno']="Petr";
-$_POST['prijmeni']="Hanzal";
-$_POST['un']="aa@pf.jcu.cz";
-$_POST['pw']="1234";
+$users = $db->select("SELECT * FROM " . $cfg['tbl_user']);
 
-/*
-$dot="INSERT INTO {$cfg['tbl_user']} 
-        (jmeno, prijmeni, un, pw, datum) 
-     VALUES 
-        ('{$_POST['jmeno']}', '{$_POST['prijmeni']}', '{$_POST['un']}', '{$_POST['pw']}', NOW())";
- */
- $select = "SELECT * FROM " . $cfg['tbl_user'];
- $d = $db->select($select);
+ for($i=0; $i<count($users); $i++) {
+     $jmeno[] = $users[$i]['jmeno'];
+     $prijmeni[] = $users[$i]['prijmeni'];
+ }
+ $myTpl = new MyTemplate();
 
-/*
-$dot="
-        DELETE FROM {$cfg['tbl_user']} WHERE id=3;
-";
-*/
+ $myTpl->caching = false;
 
-//$result=$db->query($dot);
-for($i=0; $i<count($d); $i++) {
-  echo $d[$i]['jmeno'];
-}
+ $myTpl->force_compile = true;
+
+$myTpl->assign("jmeno", $jmeno);
+$myTpl->assign("prijmeni", $prijmeni);
+
+$menu="<ul><li><a href=\"\">Prvni</a></li><li><a href=\"\">Druha</a></li><li><a href=\"\">Treti</a></li></ul>";
+$myTpl->assign("menu", $menu);
+
+$whole_page=$myTpl->fetch("templates/tplPage.html");
+$myTpl->assign("maincontent",$whole_page);
+$myTpl->display("templates/tplMainPage.html");
+
 ?>
