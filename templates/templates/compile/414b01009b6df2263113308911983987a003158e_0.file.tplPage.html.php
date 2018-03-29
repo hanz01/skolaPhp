@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.32-dev-42, created on 2018-03-22 11:22:19
+/* Smarty version 3.1.32-dev-42, created on 2018-03-29 09:44:35
   from 'G:\xampp\htdocs\skola\templates\tplPage.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32-dev-42',
-  'unifunc' => 'content_5ab383db12f810_06511236',
+  'unifunc' => 'content_5abc9963889936_58477971',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ab383db12f810_06511236 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5abc9963889936_58477971 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
