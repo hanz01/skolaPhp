@@ -13,8 +13,8 @@ class MyTemplate extends Smarty
     {
         parent::__construct();
         $this->setTemplateDir(__DIR__."/templates/");
-        $this->setCompileDir(__DIR__."/templates/compile");
+        $this->setCompileDir(__DIR__."/compile");
         $this->setConfigDir(__DIR__."/templates/");
-        $this->setCacheDir(__DIR__."/templates/cache");
+        $this->setCacheDir(__DIR__."/cache");
     }
 }
