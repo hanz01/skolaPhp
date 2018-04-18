@@ -1,0 +1,7 @@
+{foreach $stranky AS $p=>$stranka}
+    <h2>{$p.nazev}</h2>
+    <em>{$stranka.anotace}</em><br />
+    <a href="?page=/page/{$stranka.id}">vice info</a>
+{/foreach}
+
+{$test}

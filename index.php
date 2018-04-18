@@ -1,31 +1,30 @@
 <?php
 error_reporting(E_ERROR);
-require "inc/config.inc.php";
-require "inc/class.db.php";
-require("templates/templateConfig.php");
+session_start();
+require "langInc.php";
+require "models/config.inc.php";
+
+function autoload($class) {
+    if(preg_match('/Controler/', $class)) {
+        if(file_exists("controlers/class_" . $class . ".php")) {
+            require "controlers/class_" . $class . ".php";
+        }
+    }
+    else {
+        if (file_exists("models/class_" . $class . ".php")) {
+            require "models/class_" . $class . ".php";
+        }
+    }
+}
+
+spl_autoload_register ("autoload");
 
 $db=new Db($cfg['DBServer'],$cfg['DBUSer'],$cfg['DBPasswd'],$cfg['DBName']);
+$routerControler = new RouterControler($db, $cfg);
+//$routerControler->make($_SERVER['REQUEST_URI']);
+$routerControler->make($_GET['page']);
+$routerControler->listWiew();
 
-$users = $db->select("SELECT * FROM " . $cfg['tbl_user']);
 
- for($i=0; $i<count($users); $i++) {
-     $jmeno[] = $users[$i]['jmeno'];
-     $prijmeni[] = $users[$i]['prijmeni'];
- }
- $myTpl = new MyTemplate();
-
- $myTpl->caching = false;
-
- $myTpl->force_compile = true;
-
-$myTpl->assign("jmeno", $jmeno);
-$myTpl->assign("prijmeni", $prijmeni);
-
-$menu="<ul><li><a href=\"\">Prvni</a></li><li><a href=\"\">Druha</a></li><li><a href=\"\">Treti</a></li></ul>";
-$myTpl->assign("menu", $menu);
-
-$whole_page=$myTpl->fetch("templates/tplPage.html");
-$myTpl->assign("maincontent",$whole_page);
-$myTpl->display("templates/tplMainPage.html");
 
 ?>

@@ -5,7 +5,7 @@
       <paths name="skola">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="skola" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

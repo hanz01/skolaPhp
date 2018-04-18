@@ -4,24 +4,30 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        {literal}
-        ul{list-style: none;}
-        li{float: left; padding-right: 6px;}
-        hr{display: block; clear: both; width: 100%; border: none; background: #fff;}
-        {/literal}
+
     </style>
 
 </head>
 <body>
+{if $userName eq ''}
+<a href="?page=login">Přihlásit se</a>
+{else}
+<p>Přihlášený uživatel: {$userName} <br /> <a href="?page=administrace/logout">Odhlásit se</a></p>
+{/if}
+
     <header>
-        <h1>Nadpis</h1>
+        <h1>Nadpis Webu</h1>
     </header>
+    {if $message neq ''}
+    <p>{$message}</p>
+    {/if}
     <nav>
         {$menu}
     </nav>
     <hr />
     <main>
-    {$maincontent}
+
+            {$maincontent}
     </main>
 </body>
 </html>
