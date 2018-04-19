@@ -17,4 +17,10 @@ class PageModel extends Model{
         $result=$this->db->select("SELECT * FROM ".$this->cfg['tbl_pages']." WHERE id='{$id}'");
         return $result;
     }
+
+    public function editPage($page) {
+        $sql = 'UPDATE `pages` SET `nazev`="'.$page['nazev'].'",`anotace`="'.$page['anotace'].'",`obsah`="'.$page['obsah'].'" WHERE `id` ='. $page['id'];
+        $r = $this->db->query($sql);
+        return $r;
+    }
 }

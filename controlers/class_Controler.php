@@ -15,10 +15,14 @@ abstract class Controler
     protected $config;
     protected $lang;
 
-    public function __construct($db, $config)
+    protected $messages;
+
+    public function __construct($db, $config, $messages)
     {
         $this->db = $db;
         $this->config = $config;
+        $this->messages = $messages;
+
     }
 
     abstract function make($par);
@@ -35,6 +39,19 @@ abstract class Controler
             $myTpl->assign("maincontent",$whole_page);
             $myTpl->display("templates/tplMainPage.html");
         }
+    }
+
+    public function setMessage($m) {
+        $_SESSION['message'] = $m;
+        $this->messages = $m;
+    }
+
+    public function listMessage() {
+        if($_SESSION['message'] != "") {
+            $this->data['message'] = $_SESSION['message'];
+            unset($_SESSION['message']);
+        }
+
     }
 
     public function redirect($url){

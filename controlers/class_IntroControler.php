@@ -8,9 +8,9 @@
 
 class IntroControler extends Controler
 {
-    public function __construct($db, $config)
+    public function __construct($db, $config, $messages)
     {
-        parent::__construct($db, $config);
+        parent::__construct($db, $config, $messages);
     }
 
     public function make($param) {

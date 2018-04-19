@@ -20,7 +20,7 @@ function autoload($class) {
 spl_autoload_register ("autoload");
 
 $db=new Db($cfg['DBServer'],$cfg['DBUSer'],$cfg['DBPasswd'],$cfg['DBName']);
-$routerControler = new RouterControler($db, $cfg);
+$routerControler = new RouterControler($db, $cfg, $lang['cs']);
 //$routerControler->make($_SERVER['REQUEST_URI']);
 $routerControler->make($_GET['page']);
 $routerControler->listWiew();

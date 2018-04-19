@@ -10,10 +10,9 @@ class RouterControler extends Controler
 {
     protected $controler;
 
-    public function __construct($db, $config)
+    public function __construct($db, $config, $messages)
     {
-
-        parent::__construct($db, $config);
+        parent::__construct($db, $config, $messages);
     }
 
     public function doParseUrl($url) {
@@ -34,8 +33,10 @@ class RouterControler extends Controler
             $this->redirect("?page=error");
 
         }
-        $this->controler = new $classControler($this->db, $this->config);
+        $this->controler = new $classControler($this->db, $this->config, $this->messages);
         $this->controler->make($parsedUrl);
+        if($this->messages != "")
+            $this->controler->listMessage();
         $this->controler->listWiew();
 
     }

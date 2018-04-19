@@ -8,7 +8,6 @@
 
 class LoginControler extends Controler
 {
-
         public function make($param) {
             $userSerice = new UserService($this->db, $this->config);
             if($userSerice->islogin()) {
@@ -17,14 +16,15 @@ class LoginControler extends Controler
             if($_POST) {
                 if($_POST['login'] != "" && $_POST['heslo'] != "") {
                     if($userSerice->login($_POST['login'], $_POST['heslo'])) {
+                        $this->setMessage($this->messages['login_ok']);
                         $this->redirect("?page=administrace");
                     }
                     else {
-                        //echo($lang['cs']['login_ok']);
+                        $this->setMessage($this->messages['login_fail']);
                     }
 
                 } else {
-                    echo("Vyplňte obě pole.");
+                    $this->setMessage($this->messages['form_fail']);
                 }
             }
             $this->wiev = "login/login";
